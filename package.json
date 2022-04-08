@@ -3,12 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.5.10",
+    "@auth0/auth0-react": "^1.9.0",
+    "@auth0/auth0-spa-js": "^1.20.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "apollo3-cache-persist": "^0.14.0",
+    "graphql": "^16.3.0",
+    "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-modal": "^3.14.4",
+    "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "react-tooltip": "^4.2.21",
+    "subscriptions-transport-ws": "^0.11.0",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
