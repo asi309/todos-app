@@ -10,12 +10,19 @@ import { todosMutations, todosQuery } from '../../constants';
 import { ContentWrapper } from '../../containers';
 import dateUtils from '../../utils/date';
 import './TodoDetails.scss';
+import DeleteModal from '../Modal/DeleteModal';
 
 const TodoDetails = () => {
   const [formInput, setFormInput] = useState({
     title: '',
     due_date: '',
   });
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
 
   let todo;
   const { id } = useParams();
@@ -132,9 +139,9 @@ const TodoDetails = () => {
       variables: { id },
     });
 
-    const updates = data.update_todos?.returning[0];
+    const updates = data.update_todos.returning[0];
 
-    const updatedTodo = existingTodos?.todos.map((t) => {
+    const updatedTodos = existingTodos?.todos.map((t) => {
       if (t.id === todo.id) {
         return { ...t, title: updates?.title, due_date: updates?.due_date };
       } else {
@@ -145,7 +152,7 @@ const TodoDetails = () => {
     cache.writeQuery({
       query: todosQuery.getTodoById,
       variables: { id },
-      data: { todos: updatedTodo },
+      data: { todos: updatedTodos },
     });
   };
   /* -------------------------END------------------------------------------- */
@@ -181,7 +188,7 @@ const TodoDetails = () => {
 
   const [updateTodoMMutation] = useMutation(todosMutations.updateTodo, {
     update: updateCache,
-    optimisticResponse: true,
+    // optimisticResponse: true,
   });
   /* -------------------------END------------------------------------------- */
 
@@ -195,6 +202,8 @@ const TodoDetails = () => {
   const clearTodoHandler = () => {
     clearTodoMutation({
       variables: { id: todo.id },
+      refetchQueries: ['getTodos'],
+      awaitRefetchQueries: true,
     });
     navigate(state.prev, { replace: true });
   };
@@ -233,6 +242,8 @@ const TodoDetails = () => {
 
     updateTodoMMutation({
       variables: variablesObj,
+      refetchQueries: ['getTodoById'],
+      awaitRefetchQueries: true
     });
   };
 
@@ -263,79 +274,96 @@ const TodoDetails = () => {
 
     return (
       <form className={`todo__card ${todo.is_important ? 'important' : ''}`}>
-        <div className="todo__card-heading">
-          <div className="round">
-            <input
-              type="checkbox"
-              name="is_complete"
-              id={todo.id}
-              checked={todo.is_complete}
-              onChange={toggleCompleteHandler}
-            />
-            <label htmlFor={todo.id} />
-          </div>
-          <div className="todo__card-content">
-            <input
-              type="text"
-              name="title"
-              className={`todo__card-title ${
-                todo.is_complete ? 'complete' : ''
-              }`}
-              placeholder={todo.title}
-              value={formInput.title}
-              onChange={changeHandler}
-            />
-            <div className="todo__card-subtitle" onClick={toggleTodayHandler}>
-              <span>
-                <BiSun fontSize={16} />
-              </span>{' '}
-              <span>
-                {todo.today === dateUtils.getFullDate()
-                  ? 'Today'
-                  : 'Add to Today'}
-              </span>
-            </div>
-            <div className="add-todo__input-date">
-              <div className="input-date__icon">
-                <BsCalendar4Event fontSize={16} color="#3d3d4e" />
-              </div>
+        <main className="todo__card-main">
+          <div className="todo__card-heading">
+            <div className="round">
               <input
-                type="date"
-                name="due_date"
-                value={formInput.due_date}
-                placeholder={
-                  formInput.due_date
-                    ? formInput.due_date
-                    : 'Due Date (yyyy-mm-dd)'
-                }
-                onChange={changeHandler}
-                style={!formInput.due_date ? { color: '#777' } : {}}
+                type="checkbox"
+                name="is_complete"
+                id={todo.id}
+                checked={todo.is_complete}
+                onChange={toggleCompleteHandler}
               />
+              <label htmlFor={todo.id} />
+            </div>
+            <div className="todo__card-content">
+              <input
+                type="text"
+                name="title"
+                className={`todo__card-title ${
+                  todo.is_complete ? 'complete' : ''
+                }`}
+                placeholder={todo.title}
+                value={formInput.title}
+                onChange={changeHandler}
+              />
+              <div className="todo__card-subtitle" onClick={toggleTodayHandler}>
+                <span>
+                  <BiSun fontSize={16} />
+                </span>{' '}
+                <span>
+                  {todo.today === dateUtils.getFullDate()
+                    ? 'Today'
+                    : 'Add to Today'}
+                </span>
+              </div>
+              <div className="add-todo__input-date">
+                <div className="input-date__icon">
+                  <BsCalendar4Event fontSize={16} color="#3d3d4e" />
+                </div>
+                <input
+                  type="date"
+                  name="due_date"
+                  value={formInput.due_date}
+                  placeholder={
+                    formInput.due_date
+                      ? formInput.due_date
+                      : 'Due Date (yyyy-mm-dd)'
+                  }
+                  onChange={changeHandler}
+                  style={!formInput.due_date ? { color: '#777' } : {}}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="todo__card-trailing">
-          <div
-            className="todo__card-trailing-important"
-            onClick={toggleImportantHandler}
-          >
-            {todo.is_important ? (
-              <AiFillStar color="#ea4c89" fontSize={26} />
-            ) : (
-              <AiOutlineStar color="#3d3d4e" fontSize={26} />
-            )}
+          <div className="todo__card-trailing">
+            <div
+              className="todo__card-trailing-important"
+              onClick={toggleImportantHandler}
+            >
+              {todo.is_important ? (
+                <AiFillStar color="#ea4c89" fontSize={26} />
+              ) : (
+                <AiOutlineStar color="#3d3d4e" fontSize={26} />
+              )}
+            </div>
           </div>
+        </main>
+        <footer className="todo__card-footer">
           <div className="todo__card-cta">
             {!equalityChecker() && (
-              <button type="button" onClick={submitHandler}>
+              <button
+                className="save-btn"
+                type="button"
+                onClick={submitHandler}
+              >
                 Save
               </button>
             )}
-            <button type="button" onClick={clearTodoHandler}>
-              <RiDeleteBin6Line fontSize={20} />
+            <button
+              type="button"
+              className="del-btn"
+              onClick={openModal}
+            >
+              <RiDeleteBin6Line fontSize={32} />
             </button>
+            <DeleteModal
+              modalOpen={modalOpen}
+              changeFn={setModalOpen}
+              delFn={clearTodoHandler}
+            />
           </div>
-        </div>
+        </footer>
       </form>
     );
   }

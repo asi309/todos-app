@@ -154,8 +154,20 @@ const UPDATE_TODO = gql`
     ) {
       affected_rows
       returning {
+        id
         title
         due_date
+        is_important
+        is_complete
+        today
+        created_at
+        completed_at
+        steps {
+          id
+          created_at
+          is_complete
+          title
+        }
       }
     }
   }
