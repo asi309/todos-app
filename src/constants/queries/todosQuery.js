@@ -11,11 +11,6 @@ const GET_TODOS = gql`
       is_complete
       created_at
       completed_at
-      steps(order_by: { created_at: asc }) {
-        id
-        is_complete
-        title
-      }
     }
   }
 `;
@@ -34,11 +29,6 @@ const GET_IMP_TODOS = gql`
       is_complete
       created_at
       completed_at
-      steps(order_by: { created_at: asc }) {
-        id
-        is_complete
-        title
-      }
     }
   }
 `;
@@ -54,11 +44,6 @@ const GET_TODAY_TODOS = gql`
       is_complete
       created_at
       completed_at
-      steps(order_by: { created_at: asc }) {
-        id
-        is_complete
-        title
-      }
     }
   }
 `;
@@ -77,11 +62,6 @@ const GET_PLANNED_TODOS = gql`
       is_complete
       created_at
       completed_at
-      steps(order_by: { created_at: asc }) {
-        id
-        is_complete
-        title
-      }
     }
   }
 `;
@@ -97,11 +77,6 @@ const GET_TODO_BY_ID = gql`
       is_complete
       created_at
       completed_at
-      steps(order_by: { created_at: desc }) {
-        id
-        is_complete
-        title
-      }
     }
   }
 `;

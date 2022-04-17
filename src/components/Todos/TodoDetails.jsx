@@ -11,6 +11,7 @@ import { ContentWrapper } from '../../containers';
 import dateUtils from '../../utils/date';
 import './TodoDetails.scss';
 import DeleteModal from '../Modal/DeleteModal';
+import StepsList from './Steps/StepsList';
 
 const TodoDetails = () => {
   const [formInput, setFormInput] = useState({
@@ -186,7 +187,7 @@ const TodoDetails = () => {
     optimisticResponse: true,
   });
 
-  const [updateTodoMMutation] = useMutation(todosMutations.updateTodo, {
+  const [updateTodoMutation] = useMutation(todosMutations.updateTodo, {
     update: updateCache,
     // optimisticResponse: true,
   });
@@ -240,10 +241,10 @@ const TodoDetails = () => {
       id,
     };
 
-    updateTodoMMutation({
+    updateTodoMutation({
       variables: variablesObj,
       refetchQueries: ['getTodoById'],
-      awaitRefetchQueries: true
+      awaitRefetchQueries: true,
     });
   };
 
@@ -297,6 +298,7 @@ const TodoDetails = () => {
                 value={formInput.title}
                 onChange={changeHandler}
               />
+              <StepsList steps={todo?.steps} todo_id={todo.id} />
               <div className="todo__card-subtitle" onClick={toggleTodayHandler}>
                 <span>
                   <BiSun fontSize={16} />
@@ -350,11 +352,7 @@ const TodoDetails = () => {
                 Save
               </button>
             )}
-            <button
-              type="button"
-              className="del-btn"
-              onClick={openModal}
-            >
+            <button type="button" className="del-btn" onClick={openModal}>
               <RiDeleteBin6Line fontSize={32} />
             </button>
             <DeleteModal
