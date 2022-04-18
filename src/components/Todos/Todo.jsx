@@ -9,6 +9,12 @@ import dateUtils from '../../utils/date';
 import './Todo.scss';
 
 const Todo = ({ todo }) => {
+  let completed = 0;
+  for (let step of todo.steps) {
+    if (step.is_complete) {
+      completed += 1;
+    }
+  }
   // Update functions
   const updateCacheOnToggleComplete = (cache) => {
     const existingTodos = cache.readQuery({ query: todosQuery.getTodos });
@@ -147,6 +153,12 @@ const Todo = ({ todo }) => {
                   </span>{' '}
                   Today
                 </h4>
+              )}
+              {todo.today === dateUtils.getFullDate() && todo.steps.length && (
+                <div className="seperator" />
+              )}
+              {todo.steps.length !== 0 && (
+                <h4 className="todo__card-subtitle">{`${completed} of ${todo.steps.length}`}</h4>
               )}
               {todo.today === dateUtils.getFullDate() && todo.due_date && (
                 <div className="seperator" />
