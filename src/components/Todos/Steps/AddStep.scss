@@ -1,0 +1,40 @@
+.step-item {
+  .add-step {
+    border: none;
+    outline: none;
+  
+    border-bottom: 1px solid var(--text-dark);
+  
+    padding: 2px;
+    margin-left: 42px;
+  
+    height: 30px;
+    color: var(--text-dark);
+    font-size: 14px;
+    font-weight: 600;
+  
+    &::placeholder {
+      color: var(--text-dark);
+      opacity: 0.86;
+  
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+  
+  .add-btn {
+    border: none;
+    outline: none;
+    border-radius: 6px;
+  
+    background-color: #66bb6a;
+    color: #fff;
+    font-size: 14px;
+    line-height: 18px;
+  
+    padding: 6px 10px;
+    margin-left: 12px;
+  
+    cursor: pointer;
+  }
+}

@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { useEffect, useState } from 'react';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { useState } from 'react';
 import { stepsQuery } from '../../../constants';
 
 import AddStep from './AddStep';
@@ -33,16 +32,10 @@ const RenderStepsList = ({ steps, todo_id }) => {
 };
 
 const StepsList = ({ todo_id }) => {
-  // const [index, setIndex] = useState(steps?.length || 0);
-
   const { loading, error, data } = useQuery(stepsQuery.getSteps, {
     variables: { todo_id },
     fetchPolicy: 'cache-and-network',
   });
-
-  // const handleAddSteps = () => {
-
-  // }
 
   if (loading) {
     return <div>'loading...'</div>;
@@ -51,15 +44,6 @@ const StepsList = ({ todo_id }) => {
   if (error) {
     console.log(error);
   }
-
-  // if (!data?.steps?.length) {
-  //   return (
-  //     <div className="steps" onClick={handleAddSteps}>
-  //       <AiOutlinePlus fontSize={18} />
-  //       <p>Add Steps</p>
-  //     </div>
-  //   );
-  // }
 
   return <RenderStepsList steps={data.steps} todo_id={todo_id} />;
 };

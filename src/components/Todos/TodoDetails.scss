@@ -92,7 +92,9 @@ form.todo__card {
   }
 
   .todo__card-heading {
+    flex: 1;
     align-items: flex-start;
+    justify-content: flex-start;
   }
 
   .todo__card-trailing {

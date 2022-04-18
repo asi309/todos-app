@@ -29,6 +29,10 @@ const ADD_TODO = gql`
         today
         created_at
         completed_at
+        steps {
+          id
+          is_complete
+        }
       }
     }
   }
@@ -49,6 +53,10 @@ const ADD_IMP_TODO = gql`
         today
         created_at
         completed_at
+        steps {
+          id
+          is_complete
+        }
       }
     }
   }
@@ -69,6 +77,10 @@ const ADD_TODAY_TODO = gql`
         today
         created_at
         completed_at
+        steps {
+          id
+          is_complete
+        }
       }
     }
   }
@@ -87,6 +99,10 @@ const ADD_PLANNED_TODO = gql`
         today
         created_at
         completed_at
+        steps {
+          id
+          is_complete
+        }
       }
     }
   }
@@ -138,6 +154,10 @@ const UPDATE_TODO = gql`
         today
         created_at
         completed_at
+        steps {
+          id
+          is_complete
+        }
       }
     }
   }

@@ -1,6 +1,8 @@
 import { useMutation } from '@apollo/client';
+import { AiOutlineClose } from 'react-icons/ai';
 
 import { stepsMutations, stepsQuery } from '../../../constants';
+import './Step.scss';
 
 const Step = ({ step, todo_id, changeController, index, values }) => {
   const updateCacheOnToggleComplete = (cache) => {
@@ -101,31 +103,40 @@ const Step = ({ step, todo_id, changeController, index, values }) => {
     updateStepMutation({
       variables: { id: step.id, title: values[index] },
       refetchQueries: ['getSteps'],
-      awaitRefetchQueries: true
-    })
+      awaitRefetchQueries: true,
+    });
   };
 
   return (
-    <li>
-      <div className="round">
+    <li className="step-item">
+      <div className="step-content">
+        <div className="round">
+          <input
+            type="checkbox"
+            name="is_complete"
+            id={step.id}
+            checked={step.is_complete}
+            onChange={toggleCompleteHandler}
+          />
+          <label htmlFor={step.id} />
+        </div>
         <input
-          type="checkbox"
-          name="is_complete"
-          id={step.id}
-          checked={step.is_complete}
-          onChange={toggleCompleteHandler}
+          type="text"
+          value={values[index]}
+          onChange={changeHandler}
+          className="step-content__title"
         />
-        <label htmlFor={step.id} />
       </div>
-      <input type="text" value={values[index]} onChange={changeHandler} />
-      <button type="button" onClick={clearStepHandler}>
-        Clear
-      </button>
-      {step.title !== values[index] && (
-        <button className="save-btn" type="button" onClick={submitHandler}>
-          Update
+      <div className="btn-container">
+        {step.title !== values[index] && (
+          <button className="save-btn" type="button" onClick={submitHandler} disabled={!values[index]}>
+            Update
+          </button>
+        )}
+        <button type="button" onClick={clearStepHandler} className="del-btn">
+          <AiOutlineClose fontSize={20} />
         </button>
-      )}
+      </div>
     </li>
   );
 };

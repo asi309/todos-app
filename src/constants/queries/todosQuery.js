@@ -11,6 +11,10 @@ const GET_TODOS = gql`
       is_complete
       created_at
       completed_at
+      steps {
+        id
+        is_complete
+      }
     }
   }
 `;
@@ -29,6 +33,10 @@ const GET_IMP_TODOS = gql`
       is_complete
       created_at
       completed_at
+      steps {
+        id
+        is_complete
+      }
     }
   }
 `;
@@ -44,6 +52,10 @@ const GET_TODAY_TODOS = gql`
       is_complete
       created_at
       completed_at
+      steps {
+        id
+        is_complete
+      }
     }
   }
 `;
@@ -62,6 +74,10 @@ const GET_PLANNED_TODOS = gql`
       is_complete
       created_at
       completed_at
+      steps {
+        id
+        is_complete
+      }
     }
   }
 `;
@@ -77,6 +93,10 @@ const GET_TODO_BY_ID = gql`
       is_complete
       created_at
       completed_at
+      steps {
+        id
+        is_complete
+      }
     }
   }
 `;

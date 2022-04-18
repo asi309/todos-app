@@ -1,0 +1,66 @@
+.step-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 16px;
+
+  .step-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin-right: 20px;
+
+    .round {
+      margin-right: 12px;
+    }
+
+    .step-content__title {
+      border: none;
+      outline: none;
+      border-bottom: 1px solid var(--text-dark);
+      
+      padding: 2px;
+      
+      height: 30px;
+      color: var(--text-dark);
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .del-btn {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+
+    .save-btn {
+      border: none;
+      outline: none;
+      border-radius: 6px;
+
+      background-color: #66bb6a;
+      color: #fff;
+      font-size: 14px;
+      line-height: 18px;
+
+      padding: 6px 10px;
+      margin-right: 12px;
+
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.8;
+        cursor: initial;
+      }
+    }
+  }
+}

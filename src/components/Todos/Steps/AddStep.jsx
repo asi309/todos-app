@@ -1,6 +1,8 @@
-import { useMutation } from '@apollo/client';
 import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+
 import { stepsMutations, stepsQuery } from '../../../constants';
+import './AddStep.scss';
 
 const AddStep = ({ todo_id }) => {
   const [title, setTitle] = useState('');
@@ -42,10 +44,10 @@ const AddStep = ({ todo_id }) => {
   };
 
   return (
-    <li>
-      <input onChange={changeHandler} value={title} placeholder="Add Step" />
+    <li className='step-item'>
+      <input onChange={changeHandler} value={title} placeholder="Add Step" className='add-step' />
       {title && (
-        <button className="save-btn" type="button" onClick={submitHandler}>
+        <button className="add-btn" type="button" onClick={submitHandler}>
           Add
         </button>
       )}
